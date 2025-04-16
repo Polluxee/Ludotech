@@ -1,15 +1,15 @@
 package fr.eni.ludotech.bo;
 
 import jakarta.persistence.*;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
+@Getter
+@Setter
 @Table(name = "adresse")
 public class Adresse {
 
