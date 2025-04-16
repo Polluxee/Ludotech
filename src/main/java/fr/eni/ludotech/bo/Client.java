@@ -7,14 +7,13 @@ import lombok.RequiredArgsConstructor;
 
 @NoArgsConstructor
 @RequiredArgsConstructor
-//@Builder
 @Entity
 @Table(name = "client")
 public class Client {
 
     @Id
     @GeneratedValue
-    private int id;
+    private int noClient;
 
     @NonNull
     @Column(length = 50, nullable = false)
@@ -25,13 +24,13 @@ public class Client {
     private String prenom;
 
     @NonNull
-    @Column(length = 50, nullable = false)
+    @Column(length = 50, unique = true, nullable = false)
     private String email;
 
     @NonNull
     @Column(length = 50, nullable = false)
-    private String telephone;
+    private String noTelephone;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST, mappedBy = "client")
     private Adresse adresse;
 }
