@@ -15,13 +15,14 @@ import lombok.RequiredArgsConstructor;
 public class Genre {
 
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int no_genre;
 
     @NonNull
     @Column(length = 50, nullable = false)
     private String libelle;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private Jeu jeu;
 
 
