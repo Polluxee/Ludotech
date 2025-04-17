@@ -1,13 +1,13 @@
 package fr.eni.ludotech.bo;
 
 import jakarta.persistence.*;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
+@Getter
+@Setter
 @Table(name = "client")
 public class Client {
 
