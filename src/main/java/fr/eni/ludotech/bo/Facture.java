@@ -1,24 +1,21 @@
 package fr.eni.ludotech.bo;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
-@NoArgsConstructor
-@RequiredArgsConstructor
-//@Builder
+@Getter
+@Setter
 @Entity
-@Table(name = "exemplaire")
+@Table(name = "facture")
 public class Facture {
 
     @Id
     @GeneratedValue
-    private int id;
-    private String date;
-    private String montant;
+    @Column(name = "facture_id")
+    private int facureId;
+
+    private String date_paiement;
 }

@@ -1,21 +1,19 @@
 package fr.eni.ludotech.bo;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-//@Builder
+@Getter
+@Setter
 @Entity
 @Table(name = "genre")
 public class Genre {
 
     @Id
-    private int id;
+    private int genre_id;
 
     @NonNull
     @Column(length = 50, nullable = false)

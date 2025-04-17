@@ -1,40 +1,38 @@
 package fr.eni.ludotech.bo;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
-import java.util.List;
+import java.time.LocalDate;
 
-@Data
+@AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
-//@Builder
+@Getter
+@Setter
+@Data
 @Entity
-@Table(name = "location")
 public class Location {
-
     @Id
     @GeneratedValue
-    private int id;
+    @Column(name = "location_id")
+    private Long locationId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @Column(nullable = false)
+    private LocalDate dateDebut;
+
+    private LocalDate dateRetour;
+
+    private Double tarifJour;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_id", referencedColumnName = "client_id")
     private Client client;
 
-    @NonNull
-    @Column(length = 50, nullable = false)
-    private String dateDebut;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "exemplaire_id", referencedColumnName = "exemplaire_id")
+    private Exemplaire exemplaire;
 
-    @NonNull
-    @Column(length = 50, nullable = false)
-    private String dateRetourPrevue;
-
-    @NonNull
-    @Column(length = 50, nullable = false)
-    private String dateRetourReel;
-
-    @ManyToMany(mappedBy = "locations", cascade = CascadeType.ALL)
-    private List<Exemplaire> exemplaires;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "facture_id", referencedColumnName = "facture_id")
+    private Facture facture;
 }

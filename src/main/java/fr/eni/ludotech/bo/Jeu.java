@@ -1,56 +1,49 @@
 package fr.eni.ludotech.bo;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
-@Data
+@AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
-//@Builder
+@Getter
+@Setter
+@Data
 @Entity
-@Table(name = "jeu")
 public class Jeu {
-
     @Id
     @GeneratedValue
-    private int id;
+    @Column(name = "jeu_id")
+    private Long jeuId;
 
-    @NonNull
-    @Column(length = 50, nullable = false)
+    @Column(nullable = false)
     private String titre;
 
-    @Column(unique = true, nullable = false)
-    @NonNull
+    @Column(nullable = false)
     private String reference;
 
-    @NonNull
-    @Column(length = 50, nullable = false)
-    private int ageMin;
+    @Column(nullable = false)
+    private Integer ageMin;
 
-    @Basic(optional = true)
-    @Column(length = 50, nullable = false)
+    @Column(nullable = false)
     private String description;
 
-    @NonNull
-    @Column(length = 50, nullable = false)
-    private LocalDateTime duree;
+    @Column(nullable = false)
+    private Integer duree;
 
-    @NonNull
-    @Column(length = 50, nullable = false)
-    private int tarifJournalier;
+    @Column(nullable = false)
+    private Double tarifJour;
 
-    @OneToMany(mappedBy = "jeu", cascade = CascadeType.ALL)
-    @JoinColumn(name = "genre")
-    private List<Genre> genres;
-
-    @OneToMany(mappedBy = "jeu", cascade = CascadeType.ALL)
-    @JoinColumn(name = "exemplaire")
+    @OneToMany(mappedBy = "jeu", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Exemplaire> exemplaires;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "jeu_genre",
+            joinColumns = @JoinColumn(name = "jeu_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id")
+    )
+    private List<Genre> genres;
 }
+

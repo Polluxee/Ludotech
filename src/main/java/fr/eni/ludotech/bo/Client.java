@@ -13,7 +13,8 @@ public class Client {
 
     @Id
     @GeneratedValue
-    private int noClient;
+    @Column(name = "client_id")
+    private int clientId;
 
     @NonNull
     @Column(length = 50, nullable = false)
@@ -31,6 +32,6 @@ public class Client {
     @Column(length = 50, nullable = false)
     private String noTelephone;
 
-    @OneToOne(cascade = CascadeType.PERSIST, mappedBy = "client")
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Adresse adresse;
 }

@@ -3,8 +3,6 @@ package fr.eni.ludotech.bo;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
-
 @NoArgsConstructor
 @RequiredArgsConstructor
 @Entity
@@ -15,7 +13,8 @@ public class Adresse {
 
     @Id
     @GeneratedValue
-    private int noAdresse;
+    @Column(name = "adresse_id")
+    private int adresse_id;
 
     @NonNull
     @Column(length = 50, nullable = false)
@@ -28,8 +27,4 @@ public class Adresse {
     @NonNull
     @Column(length = 50, nullable = false)
     private String ville;
-
-    @OneToOne(mappedBy = "adresse")
-    private Client client;
-
 }

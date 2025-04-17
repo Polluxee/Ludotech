@@ -2,37 +2,33 @@ package fr.eni.ludotech.bo;
 
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
-@Data
+@AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
-//@Builder
+@Getter
+@Setter
+@Data
 @Entity
-@Table(name = "exemplaire")
+@Table(name = "exemplaire", uniqueConstraints = @UniqueConstraint(columnNames = {"codebarre"}))
 public class Exemplaire {
-
     @Id
     @GeneratedValue
-    private int id;
+    @Column(name = "exemplaire_id")
+    private Long exemplaireId;
 
-    @NonNull
-    @Column(length = 50, nullable = false)
-    private String codeBarre;
+    @Column(nullable = false, length = 13)
+    private String codebarre;
 
-    @NonNull
-    @Column(length = 50, nullable = false)
-    private String etat;
+    @Column(nullable = false)
+    private Boolean louable;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "jeu_id" , referencedColumnName = "jeu_id")
     private Jeu jeu;
 
-    @ManyToMany(mappedBy = "exemplaires", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "exemplaire")
     private List<Location> locations;
-
 }
