@@ -3,28 +3,22 @@ package fr.eni.ludotech.bo;
 import jakarta.persistence.*;
 import lombok.*;
 
-@NoArgsConstructor
-@RequiredArgsConstructor
 @Entity
-@Getter
-@Setter
-@Table(name = "adresse")
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Adresse {
-
     @Id
-    @GeneratedValue
-    @Column(name = "adresse_id")
-    private int adresse_id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    @NonNull
-    @Column(length = 50, nullable = false)
+    @Column(nullable = false)
     private String rue;
 
-    @NonNull
-    @Column(length = 5, nullable = false)
-    private String codePostal;
-
-    @NonNull
-    @Column(length = 50, nullable = false)
+    @Column(nullable = false)
     private String ville;
+
+    @Column(nullable = false)
+    private String codePostal;
 }

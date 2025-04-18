@@ -5,16 +5,14 @@ import lombok.*;
 
 import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-@Data
 @Entity
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Jeu {
     @Id
     @GeneratedValue
-    @Column(name = "jeu_id")
     private Long jeuId;
 
     @Column(nullable = false)
@@ -35,15 +33,7 @@ public class Jeu {
     @Column(nullable = false)
     private Double tarifJour;
 
-    @OneToMany(mappedBy = "jeu", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Exemplaire> exemplaires;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "jeu_genre",
-            joinColumns = @JoinColumn(name = "jeu_id"),
-            inverseJoinColumns = @JoinColumn(name = "genre_id")
-    )
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Genre> genres;
 }
 

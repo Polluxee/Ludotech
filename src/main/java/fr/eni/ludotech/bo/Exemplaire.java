@@ -6,17 +6,14 @@ import lombok.*;
 
 import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-@Data
 @Entity
-@Table(name = "exemplaire", uniqueConstraints = @UniqueConstraint(columnNames = {"codebarre"}))
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Exemplaire {
     @Id
-    @GeneratedValue
-    @Column(name = "exemplaire_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long exemplaireId;
 
     @Column(nullable = false, length = 13)
@@ -26,9 +23,5 @@ public class Exemplaire {
     private Boolean louable;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "jeu_id" , referencedColumnName = "jeu_id")
     private Jeu jeu;
-
-    @OneToMany(mappedBy = "exemplaire")
-    private List<Location> locations;
 }

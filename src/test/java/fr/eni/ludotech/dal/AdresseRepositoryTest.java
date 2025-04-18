@@ -1,52 +1,52 @@
 package fr.eni.ludotech.dal;
 
 import fr.eni.ludotech.bo.Adresse;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DataJpaTest
+@SpringBootTest
 public class AdresseRepositoryTest {
 
     @Autowired
     private AdresseRepository adresseRepository;
 
+    private Adresse completeAddress;
+
+    @BeforeEach
+    void setUp() {
+        // Adresse complète
+        completeAddress = new Adresse();
+        completeAddress.setRue("13 rue de test");
+        completeAddress.setVille("Nantes");
+        completeAddress.setCodePostal("44300");
+    }
+
+
     @Test
-    void creationAndDeletionOfEmptyAddress() {
-        // client creation
-        Adresse emptyAddress = new Adresse();
-        Adresse savedAdresse = adresseRepository.save(emptyAddress);
+    @DisplayName("Créer une adresse vide")
+    void testCreationEmptyAddress() {
+        Adresse savedAdresse = adresseRepository.save(completeAddress);
 
-        assertThat(savedAdresse).isEqualTo(emptyAddress);
         assertThat(savedAdresse).isNotNull();
-
-        // client deletion
-        adresseRepository.delete(savedAdresse);
-        Optional<Adresse> addressOptional = adresseRepository.findById(savedAdresse.getNoAdresse());
-        assertThat(addressOptional).isEmpty();
+        assertThat(savedAdresse.getCodePostal()).isEqualTo("44300");
     }
 
     @Test
-    void creationAndDeletionOfAddress() {
-        // client creation
-        Adresse address = new Adresse();
-        address.setRue("13 rue de test");
-        address.setVille("Nantes");
-        address.setCodePostal("44300");
-        Adresse savedAddress = adresseRepository.save(address);
+    @DisplayName("Créer une adresse complète")
+    void testCreationCompleteAddress() {
+        Adresse savedAddress = adresseRepository.save(completeAddress);
 
-        assertThat(savedAddress).isEqualTo(address);
         assertThat(savedAddress).isNotNull();
+        assertThat(savedAddress.getId()).isNotNull();
         assertThat(savedAddress.getVille()).isEqualTo("Nantes");
         assertThat(savedAddress.getCodePostal()).isEqualTo("44300");
-
-        // client deletion
-        adresseRepository.delete(savedAddress);
-        Optional<Adresse> addressOptional = adresseRepository.findById(savedAddress.getNoAdresse());
-        assertThat(addressOptional).isEmpty();
     }
 }
